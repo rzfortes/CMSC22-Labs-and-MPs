@@ -20,7 +20,7 @@ public class Date{
 		setMonth(month);
 		setDay(day);
 	}
-
+	
 	int getYear(){
 		return year;
 	}
