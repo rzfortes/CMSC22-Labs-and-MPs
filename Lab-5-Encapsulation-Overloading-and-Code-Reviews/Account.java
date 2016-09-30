@@ -23,7 +23,7 @@ public class Account {
 	double getBalance() {
 		return balance;
 	}
-
+	
 	void setBalance(double bal) {
 		balance = bal;
 	}
