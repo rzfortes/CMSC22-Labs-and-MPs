@@ -22,7 +22,7 @@ class QueueTester{
 
 		String peek1 = stack.peek();
 		System.out.println(peek1);
-
+		
 		stack.enqueue("Toto");
 		String peek2 = stack.peek();
 		System.out.println(peek2);
