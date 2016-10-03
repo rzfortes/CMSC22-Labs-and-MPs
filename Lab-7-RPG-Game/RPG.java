@@ -1,18 +1,10 @@
-package lab7;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * modified by Ricafelle Fortes and Christine Catubig on 10/2/16 - 10/3/16.
- *
- * created by nmenego on 9/29/16.
- */
-
 public class RPG {
-
+    
     private Random rand = new Random();
 
     // constructor
@@ -20,25 +12,14 @@ public class RPG {
         this.rand = new Random();
     }
 
-    // generate a random monster name..
-    public String getRandomMonsterName() {
-        String[] adjectives = {"Green", "Slimy", "Bloody", "Smelly"};
-        String[] monsters = {"Ogre", "Elf", "Giant", "Teacher"};
-        List<String> adjs = Arrays.asList(adjectives);
-        List<String> mons = Arrays.asList(monsters);
-
-        return adjs.get(randInt(0, adjs.size() - 1)) + " " + mons.get(randInt(0, mons.size() - 1));
-    }
-
-    // inclusive random integer
-    public int randInt(int min, int max) {
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
     // coin toss
     public boolean coinToss() {
-        return randInt(0, 1) == 1;
+        return randInt(0, 1) == 1 ? true : false;
+    }
+
+     public int randInt(int min, int max) {
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
     }
 
     // pause the game for awhile for dramatic effect!
@@ -52,55 +33,155 @@ public class RPG {
 
     // duel two characters, one as attacker, one as defender
     // returns true if someone is killed
-    public boolean duel(RPGCharacter attacker, RPGCharacter defender) {
+    public boolean duel(Character attacker, Character defender, int level) {
         int damage = attacker.attack();
-        System.out.println("--> " + attacker.getName() + " ATK " + defender.getName());
-        sleep(2000);
+        System.out.println("--> " + attacker.getName() + " attacked " + defender.getName());
+        sleep(2000); // if you can, use clear screen after dueling
 
         if (coinToss()) {
+
             int remHp = defender.takeDamage(damage);
             if (remHp <= 0) {
-                System.out.printf("--> %s killed %s!\n", attacker.getName(), defender.getName());
+                System.out.printf("\n\n    \t\t%s killed %s!\n", attacker.getName(), defender.getName());
+                
                 return true;
+                
             }
         } else {
-            System.out.println("--> MISSED!");
+            System.out.println("--> MISSED!\n");
         }
         return false;
     }
-    
+
+
+    public static Character initializeMonster(int level){
+        String name = "";
+        int hp = 0, attackDamage = 0;
+        switch(level){
+            case 1:
+                name = new String("Green Elf");
+                hp = 25;
+                attackDamage = 5; // if dali nga mamatay si hero, minusi lang ang hp or ang attackDamage
+                break;
+            case 2:
+                name = new String("Smelly Giant");
+                hp = 30;
+                attackDamage = 10;
+                break;
+            case 3:
+                name = new String("Bloody Ogre");
+                hp = 35;
+                attackDamage = 15;
+                break;
+            case 4:
+                name = new String("Fiery Demon");
+                hp = 45;
+                attackDamage = 20;
+                break;
+            case 5:
+                name = new String("The Boss");
+                hp = 60;
+                attackDamage = 30;
+                break;
+            default:
+                break;
+        }
+        Character monster =  new Monster(name, hp, attackDamage);
+        return monster;
+    }
+
     // game...
     public static void main(String[] args) {
-        
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Hero Name: ");
-        String playerName = sc.nextLine();
-        /*System.out.println("Enter your level: ");
-        int heroLevel = sc.nextInt();*/
-        int heroLevel = 50;
 
         RPG rpg = new RPG();
-        RPGCharacter hero = new Swordsman(playerName, heroLevel); // TODO take parameters as input via STDIN
-        RPGCharacter monster = new Monster(rpg.getRandomMonsterName(), (heroLevel + 30), (heroLevel/2) );
+        String name = "";
+        int level = 1;
+        int heroHp = 30;
 
-        System.out.println("\t\t\t\t\t====== GAME START =====\n\n");
-        System.out.printf("%s\n%s\n", hero, monster);
+        // default character for hero is swordsman
+        // i just really need something to initialize hero becuase mureklamo si compiler
+        Character hero = new Swordsman("Swordsman", heroHp);
+        
+        System.out.println("Hero please enter your name!         ");
+        Scanner sc = new Scanner(System.in);
+        name = sc.nextLine();
 
-        // fight! for version 1, hero will always attack first.
-        int count = 0;
-        while (true) {
-            System.out.println("== round " + ++count);
-            // hero's turn
-            boolean heroVsMonster = rpg.duel(hero, monster);
-            if (heroVsMonster) break;
+        //ask for character
+        int x = 0;
+        while(x > 3 || x < 1){
+            System.out.println(name + " choose your character.\n 1. Swordsman \n 2. Mage\n 3. Archer\n");
+            sc = new Scanner(System.in);
+            x = sc.nextInt();
 
-            // monster's turn
-            boolean monsterVsHero = rpg.duel(monster, hero);
-            if (monsterVsHero) break;
-
-            System.out.printf("%s\n%s\n", hero, monster);
+            switch(x){
+                case 1:
+                    hero = new Swordsman(name, heroHp); // TODO take parameters as input via STDIN        
+                    break;
+                case 2:
+                    hero = new Mage(name, heroHp);
+                    break;
+                case 3:
+                    hero = new Archer(name, heroHp);
+                    break;
+                default:
+                    System.out.println("Cannot find character. Please choose again!\n");
+                    break;
+            }
         }
+        int monsHp = 50;
+        System.out.println("monsterHP = " + monsHp);
+        Character monster = initializeMonster(level); // different monster each level         
 
-        System.out.printf("%s\n%s\n", hero, monster);
+        // hero will always attack first.
+        boolean heroVsMonster = false;
+        boolean monsterVsHero = false;
+        int turn = 1;
+        while (!monsterVsHero) {
+            if(level == 5){
+                System.out.println("Wonderful! You have reached level 5.\n");
+            }
+            System.out.printf("================= LEVEL %d ================\n", level);
+            System.out.println();
+
+            System.out.println("    " + hero.getName() + "\t\t||   " + monster.getName());
+            System.out.println("HP:"+ hero.getHp() + "\t\t|| HP:" + monster.getHp());
+            System.out.println("\n");
+
+            if(turn % 2 != 0){
+                heroVsMonster = rpg.duel(hero, monster, level);
+                if(heroVsMonster){
+                    System.out.println("\n\t\tLEVEL UP!\n\n");
+                    hero.setHp(heroHp+5);
+                    level++;
+                    monster = initializeMonster(level);
+                }else if (heroVsMonster && level == 5){
+
+                    System.out.println("Congratulations! You have defeated THE BOSS!!!");
+
+                    System.out.println("    (_v_)       ");                   
+                    System.out.println("     _|_        ");                       
+                    System.out.println("     | |        ");                    
+                    System.out.println("|-----+-----|   ");               
+                    System.out.println("|  MONSTER  |   ");              
+                    System.out.println("| DESTROYER |   ");              
+                    System.out.println(" '---------'    ");                 
+                    System.out.println("  |       |     ");                
+                    System.out.println("   '.   .'      ");                 
+                    System.out.println("     | |        ");                    
+                    System.out.println("    .' '.       ");             
+                    System.out.println("   _|___|_      ");                  
+                    System.out.println("  [#######]     ");              
+
+                    System.out.println("\n\nGame Over\n\n\n");
+                }
+            }else{
+                monsterVsHero = rpg.duel(monster, hero, level);
+            }
+
+
+            System.out.println("========================================\n\n\n\n\n\n\n\n\n");
+            
+            turn++;     
+        }
     }
 }
