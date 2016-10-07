@@ -1,3 +1,8 @@
+/*
+ * created by Christine Catubig and Ricafelle Fortes, 10/5/2016 - 10/7/2016
+ * 
+ */
+
 package inheritance2;
 
 public abstract class Shape {
