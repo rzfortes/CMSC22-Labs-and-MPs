@@ -1,3 +1,7 @@
+/*
+ * created by Christine Catubig and Ricafelle Fortes, 10/5/2016 - 10/7/2016
+ * another main class was included in Shape.class
+ */
 
 public class TestShape{
 	public static void main(String[] args){
