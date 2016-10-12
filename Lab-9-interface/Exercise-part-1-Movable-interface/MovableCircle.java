@@ -1,0 +1,43 @@
+/*
+ * created by Christine Catubig and Rica Fortes, 10/11/2016 - 10/12/2016
+ *
+ */
+package pkginterface;
+
+
+public class MovableCircle implements Movable {
+
+    private int radius;
+    private MovablePoint center;
+
+    public MovableCircle(int x, int y, int xSpeed, int ySpeed, int radius){
+	center = new MovablePoint(x, y, xSpeed, ySpeed);
+        this.radius = radius;
+    }
+
+    @Override
+    public String toString(){
+        return "This is a movable circle.";
+    }
+
+    @Override
+    public void moveUp(){
+        center.y -= center.ySpeed;
+    }
+
+    @Override
+    public void moveDown(){
+        center.y += center.ySpeed;
+    }
+
+    @Override
+    public void moveLeft(){
+        center.x -= center.xSpeed;
+    }
+
+    @Override
+    public void moveRight(){
+        center.x += center.xSpeed;
+    }
+    
+}
