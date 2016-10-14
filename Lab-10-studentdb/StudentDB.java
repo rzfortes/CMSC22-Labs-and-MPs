@@ -86,12 +86,11 @@ public class StudentDB {
 				studNum = sc.nextLine();
 				for(int i = 0; i < list.size(); i++) {
 					if(list.get(i).getStudentNumber().compareTo(studNum) == 0) {
-						for(Student s: list) {
-							System.out.println("Student Number: " + s.getStudentNumber());
-							System.out.println("Name: " + s.getLastName() + ", " + s.getFirstName() + " " + s.getMiddleInitial() + ".");
-							System.out.println("Program: " + s.getCourse());
-							System.out.println("Year Level: " + s.getYearLevel());
-						}
+						Student s = list.get(i);
+						System.out.println("Student Number: " + s.getStudentNumber());
+						System.out.println("Name: " + s.getLastName() + ", " + s.getFirstName() + " " + s.getMiddleInitial() + ".");
+						System.out.println("Program: " + s.getCourse());
+						System.out.println("Year Level: " + s.getYearLevel());
 						flag = 1;
 						break;
 					}
