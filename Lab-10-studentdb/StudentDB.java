@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 
 public class StudentDB {
 	
+	// checks if the student is already enrolled
 	boolean studEnrolled(List<Student> l, String studNum){
 		boolean enrolled = false;
 		for(Student s: l){
@@ -16,6 +19,7 @@ public class StudentDB {
 		return enrolled;
 	}
 	
+	// sleeps 
 	public void sleep(int ms) {
         try {
             Thread.sleep(ms);
@@ -24,16 +28,46 @@ public class StudentDB {
         }
     }
 	
+	// scans the line of the file and puts it into the list
+	public final void processLinebyLine(List<Student> list, File file) throws IOException {
+		
+        try(Scanner sc = new Scanner(file)){
+        	int ctr = 0; // counter for every record of the student info example: first name, last name .. etc
+            while(sc.hasNextLine()){
+            	//get 1 student info here and adds it to the list
+        		String studNum = sc.nextLine();
+        		String fName = sc.nextLine();
+        		char midIn = sc.nextLine().charAt(0);
+        		String lName = sc.nextLine();
+        		String curse = sc.nextLine();
+        		int yrLevel = Integer.parseInt(sc.nextLine());
+            	Student s = new Student(studNum, fName, midIn, lName, curse, yrLevel);
+            	list.add(s);
+            }
+        }
+	}
+	
 	public static void main(String[] args) throws IOException, InterruptedException {
 		StudentDB database = new StudentDB();
 		List<Student> list = new ArrayList<Student>();
 		
+		/*************************/
+		File file = new File("db.txt");
+		if(!file.exists()){
+			file.createNewFile();
+		}
+		
+		database.processLinebyLine(list, file);
+		
+		/*************************/
+			
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		System.out.println("\n\n\t\t\tWelcome to Student Database");
 		Scanner sc = new Scanner(System.in);
 		
 		int choice = 0;
-		while(choice != 7){ // we added a display option; it is more efficient than having to go to the file to check how many students are enrolled
+		// we added a display option; it is more efficient than having to go to the file to check how many students are enrolled
+		while(choice != 7){
 			System.out.println("\n\t1. Register a student\n\t2. Retrieve student information\n\t3. Unenroll a student\n\t4. Save file\n\t5. Update Student's Information\n\t6. Display all Students\n\t7. Exit");
 			System.out.print("\n\n\tUser enter your choice: ");
 			
@@ -94,7 +128,8 @@ public class StudentDB {
 					}else{
 						System.out.println("Student is not enrolled");
 					}
-					database.sleep(1000);
+					System.out.println("\n\nPress Any Key To Continue...");
+			        new java.util.Scanner(System.in).nextLine();
 					break;
 					
 				// delete a student using student number
@@ -118,12 +153,6 @@ public class StudentDB {
 				// save info to a file
 				case 4:
 					try{
-						File file = new File("C:\\Users\\Franz Pasulohan\\Workspace\\studentdb.txt");
-						
-						if(!file.exists()){
-							file.createNewFile();
-						}
-						
 						BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 						for(Student s: list){
 							bw.write(s.getStudentNumber());
@@ -212,6 +241,7 @@ public class StudentDB {
 					database.sleep(1000);
 					break;
 	            
+					// displays student info
 				case 6:
 					System.out.println("\n\t==================STUDENT INFORMATION==================");
 
