@@ -1,6 +1,10 @@
+/*
+ * 
+ *  created by Christine Catubig and Rica Fortes, 10/14/2016 - 10/15/2016
+ *
+ */
+
 import java.util.ArrayList;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 import java.io.*;
@@ -32,9 +36,8 @@ public class StudentDB {
 	public final void processLinebyLine(List<Student> list, File file) throws IOException {
 		
         try(Scanner sc = new Scanner(file)){
-        	int ctr = 0; // counter for every record of the student info example: first name, last name .. etc
             while(sc.hasNextLine()){
-            	//get 1 student info here and adds it to the list
+            	//get every student's info here and adds it to the list
         		String studNum = sc.nextLine();
         		String fName = sc.nextLine();
         		char midIn = sc.nextLine().charAt(0);
@@ -52,13 +55,13 @@ public class StudentDB {
 		List<Student> list = new ArrayList<Student>();
 		
 		/*************************/
+		// file handling part; reads a file when the program starts..
 		File file = new File("db.txt");
 		if(!file.exists()){
 			file.createNewFile();
 		}
 		
 		database.processLinebyLine(list, file);
-		
 		/*************************/
 			
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
