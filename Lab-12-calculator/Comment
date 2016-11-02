@@ -8,4 +8,6 @@
 - if one failed to press the AC button (to enter another pair of numbers) and continuously press different buttons like add, subtract, 
 or equals, etc... random things happen!
 
+Note: should change how to implement other functions.. the efficient way
+
 will fix bugs.. on Christmas break. \m/
