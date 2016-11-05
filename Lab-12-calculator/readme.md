@@ -1,5 +1,13 @@
-#Bug-gily bug-gily bug-gily bugs!
+#CMSC 22's Lab 12
 
+A mini calculator created using Swing container and component classes.
+
+Deadline of submission: 11/2/2016; submitted. With bugs.
+Under Sir Nico Martin A. Eñego.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Bug-gily bug-gily bug-gily bugs!
 - can only calculate 2 numbers at a time. Before calculating another pair of numbers, one should press AC button.
 - the following buttons does nothing:
   a. dot button
@@ -11,3 +19,5 @@ or equals, etc... random things happen!
 Note: should change how to implement other functions.. the efficient way
 
 will fix bugs.. on Christmas break. \m/
+
+Rica
