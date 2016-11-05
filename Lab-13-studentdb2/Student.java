@@ -1,3 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package studentdb2;
+
+
 import java.io.Serializable;
 
 
@@ -5,6 +13,11 @@ import java.io.Serializable;
  * 
  *  created by Christine Catubig and Rica Fortes, 10/14/2016 - 10/15/2016
  *
+ */
+
+/**
+ *
+ * @author rdfortes, modified 3:18 pm, 11/5/2016
  */
 
 // error checking: year level up until 6th only
@@ -32,6 +45,10 @@ public class Student implements Serializable {
 		this.crushName = crushName;
 		this.faveSubject = faveSubject;
 	}
+
+    Student(Student studNum, Student fName, Student midIn, Student lName, Student curse, Student yrLevel, Student crushName, Course faveSubject) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 	
 	public String getCrushName() {
