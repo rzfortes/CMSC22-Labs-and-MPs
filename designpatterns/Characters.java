@@ -9,5 +9,9 @@ public abstract class Characters {
 	void setWeapon(WeaponBehavior weapon) {
 		this.weapon = weapon;
 	}
+	
+	WeaponBehavior getWeapon() {
+		return weapon;
+	}
 
 }
