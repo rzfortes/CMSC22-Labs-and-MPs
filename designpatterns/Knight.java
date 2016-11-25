@@ -2,9 +2,13 @@ package designpattern;
 
 public class Knight extends Characters {
 
-	@Override
-	void fight() {
+	Knight() {
+		setWeapon(weapon);
 	}
 
+	@Override
+	void fight() {
+		super.getWeapon().useWeapon();
+	}
 	
 }
